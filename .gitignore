@@ -1,0 +1,7 @@
+~*.*
+node_modules
+app/libraries
+.DS_Store
+bower_components
+.idea
+credentials.json
