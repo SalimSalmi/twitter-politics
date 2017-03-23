@@ -1,26 +1,36 @@
-const fs = require("fs");
-const csv = require("fast-csv");
+var fs = require('fs')
+    , util = require('util')
+    , stream = require('stream')
+    , es = require('event-stream');
 
-var filename = "tweets-1-3"
+var filename = "nokeys"
+var regexdigits = /^(8\d{17})/g
+var regexnewline = /\r?\n|\r/g
 
-var stream = fs.createReadStream(filename + ".csv");
 
-var regexdigits = /\d{18}/g
-var regexdate = /148840\d{7}/g
+var s = fs.createReadStream(filename + ".csv")
+  .pipe(es.split())
+  .pipe(es.mapSync(function(line){
 
-var csvStream = csv()
-  .on("data", function(data){
-    console.log(data);
-    var line = data.join(",");
-    if(line.match(regexdigits)){
-      console.log(line);
-      line = "\n"+line;
+    // pause the readstream
+    s.pause();
+
+    line = line.replace(regexnewline,'');
+
+    if(line.match(regexdigits)) {
+      line = '\n' + line
     }
 
-    fs.appendFile(filename+"newlined.csv", line , function (err) { });
+    fs.appendFile(filename+"-newlined.csv", line , function (err) {
+      if(err) console.log(err);
+      s.resume();
+    });
   })
-  .on("end", function(){
-    console.log("done");
-  });
-
-stream.pipe(csvStream);
+  .on('error', function(err){
+    console.log(err);
+    console.log('Error while reading file.');
+  })
+  .on('end', function(){
+    console.log('Read entire file.')
+  })
+);
