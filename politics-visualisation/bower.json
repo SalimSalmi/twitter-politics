@@ -1,0 +1,23 @@
+{
+  "name": "instagram-vis",
+  "description": "Visualization of instagram photos in large cities.",
+  "main": "",
+  "authors": [
+    "Bojana Salim Tom"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/SalimSalmi/InstagramColorMap",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/libraries",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "^3.5.17",
+    "d3-geo-projection": "^0.2.16",
+    "topojson": "^2.1.0"
+  }
+}

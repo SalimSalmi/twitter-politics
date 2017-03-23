@@ -1,0 +1,112 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #efefef;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  font-family: verdana;
+  font-size: 14px;
+  font-weight: 200;
+  color: #333;
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: 1300px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+h1 {
+  margin: 0 0 .5em;
+  font-size: 1.5em;
+  font-weight: 200;
+  color: #444;
+}
+
+.map-container {
+  flex-grow: 1;
+  padding: 1em;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+.controls-container {
+  width: 100%;
+  padding: 1em 1em 0 1em;
+  box-sizing: border-box;
+}
+
+.side-controls {
+  margin-left: 1em;
+  width: 300px;
+}
+
+#google {
+  border-radius: .5em;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  flex-grow: 1;
+}
+
+.photos, .photos svg {
+  position: absolute;
+}
+
+ul.controls{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+ul.controls li{
+
+  padding: .5em 1em;
+  background: white;
+  border-radius: .25em;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+ul.controls li.active {
+  background-color: #307190;
+  color: white;
+}
+
+.colorpicker {
+  background-color: white;
+  border-radius: .25em;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: .5em 25px;
+  margin-bottom: 1em;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+#s .tick:last-of-type text,
+#l .tick:last-of-type text {
+  display: none;
+}
+
+.channel canvas {
+  margin: 0.5em 0;
+  width: 250px;
+  height: 1em;
+}
