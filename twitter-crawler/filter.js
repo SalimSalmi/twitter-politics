@@ -4,24 +4,26 @@ var fs = require('fs')
     , es = require('event-stream');
 
 
-var filename = "keys"
+var filename = "nokeys"
 var regexlang = /\bnl\b/ig
 var i = 0;
 
+
 var keywords = [
-  [/VVD|Rutte/ig,'vvd'],
-  [/PvdA|Asscher/ig,'pvda'],
-  [/PVV|Wilders/ig,'pvv'],
-  [/\bsp(?!é)\b|Roemer/ig,'sp'],
-  [/CDA|Buma/ig,'cda'],
-  [/D66|Pechtold/ig,'d66'],
-  [/ChristenUnie|(Christen.Unie)|Segers/ig,'cu'],
-  [/GroenLinks|(Groen.Links)|Klaver/ig,'gl'],
-  [/SGP|Staaij/ig,'sgp'],
-  [/50plus|(50.plus)|Krol/ig,'50p'],
+  [/VVD|Rutte|mensen|liberalisme|liberalen/ig,'vvd'],
+  [/PvdA|Asscher|ombudswerk|social|progressive|verbeteren|socialisten/ig,'pvda'],
+  [/PVV|Wilders|geertwilders|agema|islam|nikaab|sharia/ig,'pvv'],
+  [/\bsp(?!é)\b|Roemer|goubet|jeugdhulp|toekomst|(paulus.jansen)|optimisme|rood/ig,'sp'],
+  [/CDA|Buma|nistelrooij|schreijer|ruijten|lenaers/ig,'cda'],
+  [/D66|Pechtold|vertrouw|harmonieuze|mensen|streef|beloon|gerichtheid|mededogen/ig,'d66'],
+  [/ChristenUnie|(Christen.Unie)|Segers|stieneke|gooijer|(eppo.bruins)|bruins/ig,'cu'],
+  [/GroenLinks|(Groen.Links)|Klaver|pennarts|roijackers|kotkamp|groenlicht|eickhout/ig,'gl'],
+  [/SGP|kindzorg|zorgwetten|dementiezorg|zorgaanbieder|Staaij/ig,'sgp'],
+  [/50plus|(50.plus)|ouderen|theun|pensioen|anbi|struijlaard|Krol/ig,'50p'],
 ];
 
-var s = fs.createReadStream(filename + "-final.csv")
+
+var s = fs.createReadStream(filename + "-all.csv")
   .pipe(es.split())
   .pipe(es.mapSync(function(line){
 
