@@ -30,5 +30,8 @@
     "gulp-webserver": "^0.9.1",
     "main-bower-files": "^2.13.1",
     "tiny-lr": "^1.0.3"
+  },
+  "dependencies": {
+    "geojson-offset": "^0.1.0"
   }
 }

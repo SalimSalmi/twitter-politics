@@ -49,11 +49,37 @@ function createGoogleMap () {
     ]
   });
 
+  map.data.loadGeoJson('../data/amsterdamSalim3.json');
+  map.data.addListener('click', function(event) {
+    if(event.feature.f.data) {
+      map.data.revertStyle();
+      map.data.overrideStyle(event.feature, {strokeWeight: 4});
 
-  //d3.csv("../data/nokeys-filtered.csv", function(d) {
-  //d3.csv("../data/nokeys-filtered-Result-HierarchicalV1.csv", function(d) {
-  d3.csv("../data/keys-amsterdam.csv", function(d) {
-  //d3.csv("../data/hierarchical_Result.csv", function(d) {
+      $("#alignment").animate({
+        width: event.feature.f.data.scaled*150
+      })
+
+      var sum = 0;
+      for(var i = 0; i < 10; i++) {
+        sum += event.feature.f.data.parties[i];
+      }
+      for(var i = 0; i < 10; i++) {
+        var p = event.feature.f.data.parties[i]/sum;
+        $("#score" + i + " span").animate({
+          width: p*150
+        })//.html(Math.floor(p*100) + "%");
+      }
+    }
+  });
+
+  d3.csv("../data/out10.csv", function(d) {
+    return {
+      postcode: d.POSTCODE,
+      parties: [+d.vvd,+d.d66,+d.gl,+d.sp,+d.cu,+d.cda,+d.pvda,+d.pvv,+d.sgp,+d["50p"]],
+      total: d.Total,
+      scaled: d.Scaled,
+      region: d.Region
+    }
 
     // Reading from the csv file and getting the variables needed
     return {
@@ -71,8 +97,35 @@ function createGoogleMap () {
   }, function(error, data) {
     if (error) throw error;
     if(data.length > 1000) {data = data.slice(1,1000);}
+    var color = {};
+    var colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+    var colorId = 0;
+
+    map.data.setStyle(function(feature) {
+      for (var i = 0; i < data.length; i++) {
+        if(feature.f.POSTCODE == data[i].postcode) {
+          if(!color[data[i].region]) {
+            color[data[i].region] = colors[colorId];
+            colorId++;
+          }
+          feature.f.data = data[i];
+          return {
+            fillColor: color[data[i].region],
+            strokeColor: color[data[i].region],
+            strokeWeight: 1
+          };
+        }
+      }
+
+      return {
+        fillColor: "#aaaaaa",
+        opacity: 0,
+        strokeWeight: 0
+      };
+  });
+
     //doPolygon(data);
-    doOverlayPoints(data);
+    //doOverlayPoints(data);
   });
 
   function doPolygon(data) {

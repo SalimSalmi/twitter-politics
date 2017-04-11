@@ -82,31 +82,38 @@ ul.controls li.active {
   color: white;
 }
 
-.colorpicker {
+.scores {
   background-color: white;
   border-radius: .25em;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: .5em 25px;
+  padding: 1em;
   margin-bottom: 1em;
 }
 
-.axis path,
-.axis line {
-  fill: none;
-  shape-rendering: crispEdges;
+.scores ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.axis text {
-  font: 10px sans-serif;
+.scores ul li {
+  margin-bottom: .5em;
+  padding-left: 160px;
+  position: relative;
 }
 
-#s .tick:last-of-type text,
-#l .tick:last-of-type text {
-  display: none;
+.scores ul li span, .scores #alignment {
+  width: 0px;
+  height: 12px;
+  background-color: #3fbc5a;
+  left: 0px;
+  top:0.3em;
+  border-radius: 6px;
+  font-size: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
 }
 
-.channel canvas {
-  margin: 0.5em 0;
-  width: 250px;
-  height: 1em;
+.scores ul li span {
+  position: absolute;
 }
