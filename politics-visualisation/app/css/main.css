@@ -46,6 +46,8 @@ h1 {
 .side-controls {
   margin-left: 1em;
   width: 300px;
+  overflow-y:auto;
+  border-radius: .5em;
 }
 
 #google {
@@ -82,12 +84,16 @@ ul.controls li.active {
   color: white;
 }
 
-.scores {
+.rounded-box {
   background-color: white;
   border-radius: .25em;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 1em;
   margin-bottom: 1em;
+}
+
+.scores {
+  margin-bottom: 2em;
 }
 
 .scores ul {
@@ -102,7 +108,7 @@ ul.controls li.active {
   position: relative;
 }
 
-.scores ul li span, .scores #alignment {
+.scores ul li span {
   width: 0px;
   height: 12px;
   background-color: #3fbc5a;
@@ -112,8 +118,49 @@ ul.controls li.active {
   font-size: 10px;
   padding-left: 10px;
   box-sizing: border-box;
+  position: absolute;
 }
 
-.scores ul li span {
+.alignment #alignment {
+
+}
+
+.alignment {
+  height: 12px;
+  width: 100%;
+  position: relative;
+}
+
+.alignment .left, .alignment .right {
+  height: 12px;
+  border-radius: 6px;
+  width: 50%;
+  display: inline-block;
+  box-sizing: border-box;
   position: absolute;
+  opacity: .5;
+}
+
+.alignment .left {
+  background-color: #52a1c5;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  left: 0;
+}
+.alignment .right {
+  background-color: #c04341;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  left: 50%;
+}
+
+.alignment #alignment {
+  height: 12px;
+  border-radius: 6px;
+  min-width: 12px;
+  display: inline-block;
+  position: absolute;
+  left: 130px;
+  background-color: white;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 }

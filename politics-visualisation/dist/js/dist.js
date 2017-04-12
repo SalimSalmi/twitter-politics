@@ -49,15 +49,18 @@ function createGoogleMap () {
     ]
   });
 
+  var dataset = {};
+
   map.data.loadGeoJson('../data/amsterdamSalim3.json');
   map.data.addListener('click', function(event) {
     if(event.feature.f.data) {
       map.data.revertStyle();
       map.data.overrideStyle(event.feature, {strokeWeight: 4});
 
-      $("#alignment").animate({
-        width: event.feature.f.data.scaled*150
-      })
+      $("#zipcode .alignment #alignment").animate({
+        width: 0,
+        left: 260*event.feature.f.data.scaled + "px"
+      });
 
       var sum = 0;
       for(var i = 0; i < 10; i++) {
@@ -65,7 +68,23 @@ function createGoogleMap () {
       }
       for(var i = 0; i < 10; i++) {
         var p = event.feature.f.data.parties[i]/sum;
-        $("#score" + i + " span").animate({
+        $("#zipcode #score" + i + " span").animate({
+          width: p*150
+        })//.html(Math.floor(p*100) + "%");
+      }
+
+      $("#region .alignment #alignment").animate({
+        width: 0,
+        left: 260*event.feature.f.regionData.scaled + "px"
+      });
+
+      var sum = 0;
+      for(var i = 0; i < 10; i++) {
+        sum += event.feature.f.regionData.parties[i];
+      }
+      for(var i = 0; i < 10; i++) {
+        var p = event.feature.f.regionData.parties[i]/sum;
+        $("#region #score" + i + " span").animate({
           width: p*150
         })//.html(Math.floor(p*100) + "%");
       }
@@ -76,12 +95,12 @@ function createGoogleMap () {
     return {
       postcode: d.POSTCODE,
       parties: [+d.vvd,+d.d66,+d.gl,+d.sp,+d.cu,+d.cda,+d.pvda,+d.pvv,+d.sgp,+d["50p"]],
-      total: d.Total,
-      scaled: d.Scaled,
+      total: +d.Total,
+      scaled: +d.Scaled,
       region: d.Region
     }
 
-    // Reading from the csv file and getting the variables needed
+    // For point data
     return {
       id: +d.id,
       location: [+d.long, +d.lat],
@@ -97,9 +116,31 @@ function createGoogleMap () {
   }, function(error, data) {
     if (error) throw error;
     if(data.length > 1000) {data = data.slice(1,1000);}
+
     var color = {};
-    var colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+    var colors = ["#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
     var colorId = 0;
+    var regions = [];
+
+    for (var i = 0; i < data.length; i++) {
+      if(!regions[data[i].region]) {
+        regions[data[i].region] = {};
+        regions[data[i].region].parties = data[i].parties;
+        regions[data[i].region].scaled = data[i].scaled;
+        regions[data[i].region].number = 1;
+      } else {
+
+        for (var j = 0; j < data[i].parties.length; j++) {
+          regions[data[i].region].parties[j] += data[i].parties[j];
+        }
+        regions[data[i].region].scaled += data[i].scaled;
+        regions[data[i].region].number += 1;
+      }
+    }
+
+    for (var i = 0; i < regions.length; i++) {
+      regions[i].scaled = regions[i].scaled / regions[i].number;
+    }
 
     map.data.setStyle(function(feature) {
       for (var i = 0; i < data.length; i++) {
@@ -109,6 +150,7 @@ function createGoogleMap () {
             colorId++;
           }
           feature.f.data = data[i];
+          feature.f.regionData = regions[data[i].region];
           return {
             fillColor: color[data[i].region],
             strokeColor: color[data[i].region],
@@ -119,7 +161,7 @@ function createGoogleMap () {
 
       return {
         fillColor: "#aaaaaa",
-        opacity: 0,
+        fillOpacity: 0,
         strokeWeight: 0
       };
   });
