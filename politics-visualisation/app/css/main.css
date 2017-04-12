@@ -30,7 +30,7 @@ h1 {
 
 .map-container {
   flex-grow: 1;
-  padding: 1em;
+  padding: 1em 1em 0;
   width: 100%;
   display: flex;
   box-sizing: border-box;
@@ -47,7 +47,10 @@ h1 {
   margin-left: 1em;
   width: 300px;
   overflow-y:auto;
-  border-radius: .5em;
+  overflow-x: visible;
+  border-top-left-radius: .25em;
+  border-top-right-radius: .25em;
+  font-size: 14px;
 }
 
 #google {
@@ -55,10 +58,7 @@ h1 {
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
   background-color: white;
   flex-grow: 1;
-}
-
-.photos, .photos svg {
-  position: absolute;
+  margin-bottom: 1em;
 }
 
 ul.controls{
@@ -110,30 +110,25 @@ ul.controls li.active {
 
 .scores ul li span {
   width: 0px;
-  height: 12px;
+  height: 0.8em;
   background-color: #3fbc5a;
   left: 0px;
   top:0.3em;
-  border-radius: 6px;
-  font-size: 10px;
-  padding-left: 10px;
+  min-width: 0.8em;
+  border-radius: 0.4em;
   box-sizing: border-box;
   position: absolute;
 }
 
-.alignment #alignment {
-
-}
-
 .alignment {
-  height: 12px;
+  height: 0.8em;
   width: 100%;
   position: relative;
 }
 
 .alignment .left, .alignment .right {
-  height: 12px;
-  border-radius: 6px;
+  height: 0.8em;
+  border-radius: 0.4em;
   width: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -155,12 +150,93 @@ ul.controls li.active {
 }
 
 .alignment #alignment {
-  height: 12px;
-  border-radius: 6px;
-  min-width: 12px;
+  height: 0.8em;
+  border-radius: 0.4em;
+  min-width: 0.8em;
   display: inline-block;
   position: absolute;
   left: 130px;
   background-color: white;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+
+/* ------------- checkboxes -------------------*/
+
+
+.side-controls .checkboxes {
+  margin:0.5em;
+  position: relative;
+  height:1.5em;
+}
+
+
+input[type='checkbox'] {
+  display: none;
+}
+input[type='checkbox']:checked ~ .toggle {
+  background: #009688;
+  left: 15.6px;
+  transition: .5s;
+}
+input[type='checkbox']:checked ~ .switch {
+  background: #6DBEB7;
+  transition: .5s;
+}
+
+.checkboxes label {
+  cursor: pointer;
+}
+
+.checkboxes .switch {
+  display: block;
+  width: 30px;
+  height: 12px;
+  background: #939393;
+  border-radius: 6px;
+  position: absolute;
+  top: 0;
+  transition: .5s;
+}
+
+.checkboxes .toggle {
+  height: 16.8px;
+  width: 16.8px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: -2.4px;
+  left: -2.4px;
+  box-shadow: 0 0.6px 1.2px rgba(0, 0, 0, 0.4);
+  transition: .5s;
+}
+
+.checkboxes .card {
+  display: inline-block;
+  margin: 7.4px;
+  margin: 3px;
+  width: 30px;
+  height: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.checkboxes .text {
+  position: absolute;
+  margin-left: 40px;
+  margin-top: -.25em;
+  font-size: 15px;
+}
+
+
+#center {
+  left: 100px;
+  position: absolute;
+}
+
+#right {
+  left: 200px;
+  position: absolute;
+
 }

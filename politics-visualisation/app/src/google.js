@@ -24,7 +24,45 @@ function createGoogleMap () {
     ]
   });
 
-  var dataset = {};
+  var left = true, center = true, right = true;
+
+  $("#left input").on("change", function(){
+    left = !left;
+    selectRegions();
+  });
+
+  $("#center input").on("change", function(){
+    center = !center;
+    selectRegions();
+  });
+
+  $("#right input").on("change", function(){
+    right = !right;
+    selectRegions();
+  });
+
+  function selectRegions() {
+    map.data.setStyle(function(feature) {
+      if(feature.f.regionData &&
+        ((left && feature.f.regionData.scaled < 0.45) ||
+        (right && feature.f.regionData.scaled > 0.55) ||
+        (center && feature.f.regionData.scaled >= 0.45 && feature.f.regionData.scaled <= 0.55)
+      )) {
+        return {
+          fillColor: feature.f.color,
+          strokeColor: feature.f.color,
+          strokeWeight: 1
+        };
+      } else {
+        return {
+          fillOpacity: 0,
+          strokeWeight: 0
+        };
+      }
+    });
+  }
+
+
 
   map.data.loadGeoJson('../data/amsterdamSalim3.json');
   map.data.addListener('click', function(event) {
@@ -126,6 +164,7 @@ function createGoogleMap () {
           }
           feature.f.data = data[i];
           feature.f.regionData = regions[data[i].region];
+          feature.f.color = color[data[i].region];
           return {
             fillColor: color[data[i].region],
             strokeColor: color[data[i].region],
@@ -139,74 +178,6 @@ function createGoogleMap () {
         fillOpacity: 0,
         strokeWeight: 0
       };
+    });
   });
-
-    //doPolygon(data);
-    //doOverlayPoints(data);
-  });
-
-  function doPolygon(data) {
-    var regions = {}
-
-    for (var i = 0; i < data.length; i++) {
-      if(regions[data[i].region]) regions[data[i].region].push(data[i]);
-      else regions[data[i].region] = [data[i]];
-    }
-
-    for (var key in regions) {
-      // Construct the polygon.
-      var randc = '#'+Math.floor(Math.random()*16777215/2 + 16777215/4).toString(16)
-
-      var polyarea = new google.maps.Polygon({
-        paths: convexHull(regions[key]),
-        strokeColor: randc,
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: randc,
-        fillOpacity: 0.35
-      });
-      polyarea.setMap(map);
-    }
-  }
-
-  function doOverlayPoints(data) {
-    var overlay = new google.maps.OverlayView();
-    overlay.onAdd = function() {
-      var layer = d3.select(this.getPanes().overlayLayer).append("div")
-          .attr("class", "photos");
-
-      overlay.draw = function() {
-        var projection = this.getProjection(),
-            padding = 10;
-
-        var marker = layer.selectAll("svg")
-            .data(data)
-            .each(transform)
-          .enter().append("svg")
-            .each(transform)
-            .attr("class", "marker");
-
-        marker.append("circle")
-            .attr("r", 4.5)
-            .attr("cx", padding)
-            .attr("cy", padding)
-            .attr("stroke", "#333333")
-            .attr("fill", function(d) {
-              return d.colors[0];
-            });
-
-        // Identifying the location of the points
-        function transform(d) {
-          d = new google.maps.LatLng(d.lat, d.lng);
-          d = projection.fromLatLngToDivPixel(d);
-          return d3.select(this)
-              .style("left", (d.x - padding) + "px")
-              .style("top", (d.y - padding) + "px");
-        }
-      };
-    };
-    // Bind our overlay to the map…
-    overlay.setMap(map);
-  }
-
 }
