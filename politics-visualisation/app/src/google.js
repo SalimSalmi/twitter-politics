@@ -63,7 +63,7 @@ function createGoogleMap () {
 
 
   // Load geojson data of amsterdam
-  map.data.loadGeoJson('../data/amsterdamSalim3.json');
+  map.data.loadGeoJson('../data/amsterdam.json');
   // Callback for clicking a zipcode polygon
   map.data.addListener('click', function(event) {
     if(event.feature.f.data) {
@@ -111,7 +111,7 @@ function createGoogleMap () {
   });
 
   // Load cluster data
-  d3.csv("../data/out10.csv", function(d) {
+  d3.csv("../data/clusters.csv", function(d) {
     // Map csv to javascript object
     return {
       postcode: d.POSTCODE,
