@@ -1,12 +1,11 @@
 {
-  "name": "instagram-vis",
-  "description": "Visualization of instagram photos in large cities.",
+  "name": "politics-vis",
+  "description": "Visualization of amsterdam political spectrum.",
   "main": "",
   "authors": [
-    "Bojana Salim Tom"
+    "Bojana Salim Thanasis Norman and Abigail"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/SalimSalmi/InstagramColorMap",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -16,10 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "d3": "^3.5.17",
-    "d3-geo-projection": "^0.2.16",
     "topojson": "^2.1.0",
     "jquery": "^3.2.1",
-    "jquery-ui": "^1.12.1"
+    "d3": "^4.7.4"
   }
 }

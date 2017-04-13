@@ -1,20 +1,11 @@
 {
-  "name": "instagram-vis",
-  "version": "0.0.0",
-  "description": "Visualization of instagram photos in large cities.",
+  "name": "politics-vis",
+  "version": "1.0.0",
+  "description": "Visualization of amsterdam political spectrum.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SalimSalmi/InstagramColorMap.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SalimSalmi/InstagramColorMap/issues"
-  },
-  "homepage": "https://github.com/SalimSalmi/InstagramColorMap#readme",
-  "author": "Bojana Salim Tom",
+  "author": "Bojana Salim Thanasis Norman and Abigail",
   "devDependencies": {
     "csv-write-stream": "^2.0.0",
     "get-image-colors": "^1.5.1",
