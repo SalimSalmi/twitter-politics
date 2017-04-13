@@ -4,9 +4,9 @@ var fs = require('fs')
     , es = require('event-stream');
 
 
-var filename = "keys"
-4.73,52.29,4.98,52.42
+var filename = "nokeys"
 
+//Filter file to only include tweets with location within the geo boundaries 4.73,52.29,4.98,52.42
 var s = fs.createReadStream(filename + "-filtered.csv")
   .pipe(es.split())
   .pipe(es.mapSync(function(line){

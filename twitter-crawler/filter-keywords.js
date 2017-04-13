@@ -8,7 +8,7 @@ var filename = "nokeys"
 var regexlang = /\bnl\b/ig
 var i = 0;
 
-
+// Regular expression to find keywords per party and a corresponding tag
 var keywords = [
   [/VVD|Rutte|mensen|liberalisme|liberalen/ig,'vvd'],
   [/PvdA|Asscher|ombudswerk|social|progressive|verbeteren|socialisten/ig,'pvda'],
@@ -30,9 +30,10 @@ var s = fs.createReadStream(filename + "-all.csv")
     // pause the readstream
     s.pause();
 
+    // Get csv values
     var data = line.split(',');
 
-
+    // Try and match the tweet content to the keywords and if there is a match output it to a file
     for (var i = 0; i < keywords.length; i++) {
       if(data[1] && data[1].match(keywords[i][0]) && parseInt(data[2]) > 0 && parseInt(data[3]) > 0) {
 
